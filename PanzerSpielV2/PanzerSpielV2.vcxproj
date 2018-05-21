@@ -112,13 +112,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="GraphicSystem.h" />
+    <ClInclude Include="Handle.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="InputAlias.h" />
+    <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="InputKeyState.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>

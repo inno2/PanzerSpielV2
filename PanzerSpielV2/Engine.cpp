@@ -17,7 +17,7 @@ Engine::Engine()
 bool Engine::BootUp()
 {
 	InputSystem* inputsystem = new InputSystem();
-	inputsystem->Init();
+	
 	m_systems.push_back(inputsystem);
 
 

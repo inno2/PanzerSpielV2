@@ -27,43 +27,62 @@
 
 #pragma once
 #include <cstdint>
-#include "Component.h"
+#include "Handle.h"
 
-struct Handle
+template<class component_type>
+class ComponentManager
 {
-	Handle() : m_index(0), m_counter(0), m_type(0)
-	{}
+public:
+	enum { MaxEntries = 4096 }; // 2^12
 
-	Handle(uint64_t index, uint64_t counter, uint64_t type)
-		: m_index(index), m_counter(counter), m_type(type)
-	{}
-
-	inline operator uint64_t() const;
-	static Handle GetInvalid()
+	template< typename component_type>
+	ComponentManager<component_type>(size_t max_components)
 	{
-		Handle h;
-		h.Invalidate();
-		return h;
-	}
-	inline void Invalidate()
-	{
-		m_counter = 0;
-		m_index = 0;
-		m_type = ComponentType::Invalid_Type;
-	}
-	inline bool Is_valid()
-	{
-		return (m_type != ComponentType::Invalid_Type);
+		m_components = new component_type[max_components];
 	}
 
-	uint64_t m_index : 12;
-	uint64_t m_counter : 15;
-	uint64_t m_type : 5;
+	void Reset();	
+	Handle Add(void* p, uint64_t type);
+	void Update(Handle handle, void* p);
+	void Remove(Handle handle);
+	
+	void* Get(Handle handle) const;
+	bool Get(Handle handle, void*& out) const;
+	bool GetAs(Handle handle, component_type& out) const;
+
+	int GetCount() const;
+
+private:
+	ComponentManager(const ComponentManager&);
+	ComponentManager& operator=(const ComponentManager&);
+
+	struct HandleEntry
+	{
+		HandleEntry();
+		explicit HandleEntry(uint64_t nextFreeIndex);
+		
+		uint64_t m_nextFreeIndex : 12;
+		uint64_t m_counter : 15;
+		uint64_t m_active : 1;
+		uint64_t m_endOfList : 1;
+		void* m_entry;
+	};
+
+	HandleEntry m_entries[MaxEntries];
+	component_type* m_components;
+
+	int m_activeEntryCount;
+	uint64_t m_firstFreeEntry;
 };
 
 
-Handle::operator uint64_t() const
+template< typename component_type>
+inline bool ComponentManager<component_type>::GetAs(Handle handle, component_type& out) const
 {
-	return m_type << 27 | m_counter << 12 | m_index;
+	void* outAsVoid;
+	const bool rv = Get(handle, outAsVoid);
+	out = union_cast< component_type >(outAsVoid);
+
+	return rv;
 }
 
