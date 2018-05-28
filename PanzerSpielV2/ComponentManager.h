@@ -45,7 +45,9 @@ public:
 	
 	component_type* Get(Handle handle) const;
 	bool Get(Handle handle, component_type& out_comp) const;
-
+	const std::vector<component_type>& Get_all_components() {
+		return m_components;
+	}
 	int GetCount() const;
 
 private:

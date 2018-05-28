@@ -3,11 +3,12 @@
 
 bool MovementSystem::Update(std::chrono::microseconds)
 {
-	for each(GameObject object in GameObjectFactory::m_GameObjects)
+	for each(Movement_Component movement in GameObjectFactory::m_Movement_CompManager.Get_all_components)	
 	{
-		if (!object.HasComponent(ComponentType::Movement) && !object.HasComponent(ComponentType::Transformation))
+		if (movement.m_transformation_component == NULL) {
 			continue;
-
+		}
+		
 
 	}
 
