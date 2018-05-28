@@ -131,7 +131,6 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="Movement_Component.h" />
-    <ClInclude Include="Singleton.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Transformation_Component.h" />
   </ItemGroup>

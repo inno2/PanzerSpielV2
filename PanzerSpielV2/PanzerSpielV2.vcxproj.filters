@@ -79,8 +79,5 @@
     <ClInclude Include="MovementSystem.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
