@@ -16,6 +16,9 @@
     <Filter Include="Core\Utility\Input">
       <UniqueIdentifier>{0ddd0c63-4d21-4df2-a942-87cdd62f7e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Systems">
+      <UniqueIdentifier>{70bd651e-7862-49a0-b1bc-a071833261dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -23,16 +26,18 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp" />
-    <ClCompile Include="GameObjectFactory.cpp" />
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementSystem.cpp">
+      <Filter>Core\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectFactory.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="GraphicSystem.h">
@@ -60,6 +65,21 @@
       <Filter>Core\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="ComponentManager.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement_Component.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformation_Component.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Core\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementSystem.h">
+      <Filter>Core\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
       <Filter>Core\Utility</Filter>
     </ClInclude>
   </ItemGroup>
