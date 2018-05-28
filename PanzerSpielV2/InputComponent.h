@@ -5,6 +5,7 @@
 
 class Input_Component : public Component
 {
+public:
 	int key;
 	Input_Alias function;
 	Key_State status;

@@ -56,9 +56,9 @@ struct Handle
 		return (m_type != ComponentType::Invalid_Type);
 	}
 
-	uint64_t m_index : 12;
-	uint64_t m_counter : 15;
-	uint64_t m_type : 5;
+	uint64_t m_index : 22;
+	uint64_t m_counter : 18;
+	uint64_t m_type : 24;
 };
 
 

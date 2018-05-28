@@ -113,7 +113,6 @@
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObjectFactory.cpp" />
-    <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
