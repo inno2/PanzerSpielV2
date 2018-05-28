@@ -25,11 +25,13 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="GameObjectFactory.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="MovementSystem.cpp">
+      <Filter>Core\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
       <Filter>Core\Systems</Filter>
     </ClCompile>
   </ItemGroup>

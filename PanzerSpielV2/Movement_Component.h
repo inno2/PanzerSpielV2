@@ -2,8 +2,6 @@
 #include "Component.h"
 #include "Eigen\Dense"
 
-
-
 class Movement_Component : public Component
 {
 public:

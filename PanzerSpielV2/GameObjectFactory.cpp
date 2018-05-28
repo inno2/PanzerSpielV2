@@ -8,7 +8,5 @@ std::vector<GameObject> GameObjectFactory::m_GameObjects;
 bool GameObjectFactory::Init()
 {
 	m_GameObjects.reserve(max_gameobjects);
-
-
 	return false;
 }
