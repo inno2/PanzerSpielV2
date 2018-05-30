@@ -4,4 +4,5 @@ enum Key_State
 {
 	up = 0,
 	down,
+	clicked,
 };

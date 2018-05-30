@@ -1,4 +1,6 @@
 #include "InputSystem.h"
+#include "GameObjectFactory.h"                   
+#include "InputComponent.h"
 
 using namespace std::chrono;
 
@@ -40,13 +42,20 @@ LRESULT InputSystem::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		// Inputs
 	case WM_LBUTTONDOWN:
 	case WM_KEYDOWN:
-		//inputsystem->SetKeystate(wParam, keystate::down);
+		if (wParam > 0 && wParam < 255)
+		{
+			InputSystem::m_keys[wParam] = Key_State::down;
+		}
 		break;
 	case WM_LBUTTONUP: // for some reason wParam isnt the vk code in this case
-		//inputsystem->SetKeystate(VK_LBUTTON, keystate::clicked);
+		//inputsystem->SetKeystate(VK_LBUTTON, keystate::clicked);		
+		InputSystem::m_keys[VK_LBUTTON] = Key_State::clicked;		
 		break;
 	case WM_KEYUP:
-		//inputsystem->SetKeystate(wParam, keystate::clicked);
+		if (wParam > 0 && wParam < 255)
+		{
+			InputSystem::m_keys[wParam] = Key_State::up;
+		}
 		break;
 
 	default:
@@ -115,5 +124,10 @@ bool InputSystem::Update(microseconds deltatime)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}	
+	}
+
+	for each (Input_Component inputcomp in GameObjectFactory::m_InputCompManager.GetAllComponents())
+	{
+		inputcomp.status = m_keys[inputcomp.key];
 	}
 }

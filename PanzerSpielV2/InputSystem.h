@@ -2,6 +2,8 @@
 #include "System.h"
 #include <Windows.h> 
 #include <chrono>
+#include "InputKeyState.h"
+
 
 class InputSystem : public System
 {
@@ -12,6 +14,7 @@ public:
 private:
 	WNDCLASSEX wndClass;
 	HWND m_windowHandle;
+	static Key_State m_keys[255];
 
 	// Geerbt über System
 	virtual bool Update(std::chrono::microseconds delta_time) override;

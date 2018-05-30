@@ -15,6 +15,7 @@ public:
 	static bool Init();
 
 	static std::vector<GameObject> m_GameObjects;
-	static ComponentManager<Movement_Component> m_Movement_CompManager;
-	static ComponentManager<Transformation_Component> m_Transformation_CompManager;
+	static ComponentManager<Movement_Component> m_MovementCompManager;
+	static ComponentManager<Transformation_Component> m_TransformationCompManager;
+	static ComponentManager<Input_Component> m_InputCompManager;
 };

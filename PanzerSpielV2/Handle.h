@@ -51,7 +51,7 @@ struct Handle
 		m_index = 0;
 		m_type = ComponentType::Invalid_Type;
 	}
-	inline bool Is_valid()
+	inline bool Is_valid() const
 	{
 		return (m_type != ComponentType::Invalid_Type);
 	}

@@ -45,9 +45,6 @@
     <ClInclude Include="GraphicSystem.h">
       <Filter>Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Handle.h">
       <Filter>Core\Utility</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>Core\Systems</Filter>
     </ClInclude>
     <ClInclude Include="MovementSystem.h">
+      <Filter>Core\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
   </ItemGroup>
