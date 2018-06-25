@@ -3,6 +3,7 @@
 
 class Tank_Interaction_Component : public Component
 {
-	public float accelerate;
-	public float rotate;
+public:
+	float accelerate;
+	float rotate;
 };
