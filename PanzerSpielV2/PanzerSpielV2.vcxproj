@@ -116,6 +116,7 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="Tank_System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
@@ -125,6 +126,9 @@
     <ClInclude Include="GraphicSystem.h" />
     <ClInclude Include="Handle.h" />
     <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="Tank_Interaction_Component.h" />
+    <ClInclude Include="Tank_System.h" />
+    <ClInclude Include="Turret_Interaction_Component.h" />
     <ClInclude Include="InputAlias.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputKeyState.h" />

@@ -34,6 +34,9 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>Core\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Tank_System.cpp">
+      <Filter>Core\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectFactory.h">
@@ -79,6 +82,15 @@
       <Filter>Core\Systems</Filter>
     </ClInclude>
     <ClInclude Include="InputSystem.h">
+      <Filter>Core\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret_Interaction_Component.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_Interaction_Component.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_System.h">
       <Filter>Core\Systems</Filter>
     </ClInclude>
   </ItemGroup>
