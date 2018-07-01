@@ -7,16 +7,19 @@
     <Filter Include="Core\Graphics">
       <UniqueIdentifier>{ce6bc1fe-8971-4e25-9025-4ffe6f5cc578}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Components">
-      <UniqueIdentifier>{9da4503c-4ccf-4726-a6d6-c265f95efde6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Utility">
       <UniqueIdentifier>{4dca4dfc-7b22-45e9-a373-96de32060b09}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Utility\Input">
       <UniqueIdentifier>{0ddd0c63-4d21-4df2-a942-87cdd62f7e9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Systems">
+    <Filter Include="Core\ECS">
+      <UniqueIdentifier>{65471faa-2cbd-4271-b523-75bbe10f0f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\ECS\Components">
+      <UniqueIdentifier>{9da4503c-4ccf-4726-a6d6-c265f95efde6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\ECS\Systems">
       <UniqueIdentifier>{70bd651e-7862-49a0-b1bc-a071833261dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,40 +28,31 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectFactory.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="MovementSystem.cpp">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Tank_System.cpp">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Core\ECS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjectFactory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="GraphicSystem.h">
       <Filter>Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Handle.h">
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputKeyState.h">
       <Filter>Core\Utility\Input</Filter>
@@ -66,32 +60,36 @@
     <ClInclude Include="InputAlias.h">
       <Filter>Core\Utility\Input</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentManager.h">
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Movement_Component.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Transformation_Component.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="System.h">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="MovementSystem.h">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="InputSystem.h">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Turret_Interaction_Component.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Tank_Interaction_Component.h">
-      <Filter>Core\Components</Filter>
+      <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Tank_System.h">
-      <Filter>Core\Systems</Filter>
+      <Filter>Core\ECS\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="PackedArray.h">
+      <Filter>Core\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="TODO.txt" />
   </ItemGroup>
 </Project>

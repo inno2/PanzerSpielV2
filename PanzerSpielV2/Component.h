@@ -1,11 +1,16 @@
 #pragma once
+
+#define COMPONENT_MAX_TYPES (ComponentType::ComponentAmount)
+
 enum ComponentType
 {
-	Invalid_Type = 0,
-	Input,
-	Movement,
+	Movement = 0,
 	Transformation,
+	ComponentAmount,
+	Invalid
 };
+
+
 
 class Component
 {

@@ -1,0 +1,4 @@
+
+
+Verbesserungen:
+- Rückgabewerte in EntityManager

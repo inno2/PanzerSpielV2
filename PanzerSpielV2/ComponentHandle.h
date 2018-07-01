@@ -29,19 +29,19 @@
 #include <cstdint>
 #include "Component.h"
 
-struct Handle
+struct ComponentHandle
 {
-	Handle() : m_index(0), m_counter(0), m_type(0)
+	ComponentHandle() : m_index(0), m_counter(0), m_type(0)
 	{}
 
-	Handle(uint64_t index, uint64_t counter, uint64_t type)
+	ComponentHandle(uint64_t index, uint64_t counter, uint64_t type)
 		: m_index(index), m_counter(counter), m_type(type)
 	{}
 
 	inline operator uint64_t() const;
-	static Handle GetInvalid()
+	static ComponentHandle GetInvalid()
 	{
-		Handle h;
+		ComponentHandle h;
 		h.Invalidate();
 		return h;
 	}
@@ -62,7 +62,7 @@ struct Handle
 };
 
 
-Handle::operator uint64_t() const
+ComponentHandle::operator uint64_t() const
 {
 	return m_type << 27 | m_counter << 12 | m_index;
 }

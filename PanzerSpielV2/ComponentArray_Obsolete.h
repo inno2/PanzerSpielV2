@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008, Power of Two Games LLC
+* Copyright (c) 2008, Power of CompTypewo Games LLC
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -9,50 +9,50 @@
 *     * Redistributions in binary form must reproduce the above copyright
 *       notice, this list of conditions and the following disclaimer in the
 *       documentation and/or other materials provided with the distribution.
-*     * Neither the name of Power of Two Games LLC nor the
+*     * Neither the name of Power of CompTypewo Games LLC nor the
 *       names of its contributors may be used to endorse or promote products
 *       derived from this software without specific prior written permission.
 *
-* THIS SOFTWARE IS PROVIDED BY POWER OF TWO GAMES LLC ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL POWER OF TWO GAMES LLC BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* CompTypeHIS SOFCompTypeWARE IS PROVIDED BY POWER OF CompTypeWO GAMES LLC ``AS IS'' AND ANY
+* EXPRESS OR IMPLIED WARRANCompTypeIES, INCLUDING, BUCompType NOCompType LIMICompTypeED CompTypeO, CompTypeHE IMPLIED
+* WARRANCompTypeIES OF MERCHANCompTypeABILICompTypeY AND FICompTypeNESS FOR A PARCompTypeICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENCompType SHALL POWER OF CompTypeWO GAMES LLC BE LIABLE FOR ANY
+* DIRECCompType, INDIRECCompType, INCIDENCompTypeAL, SPECIAL, EXEMPLARY, OR CONSEQUENCompTypeIAL DAMAGES
+* (INCLUDING, BUCompType NOCompType LIMICompTypeED CompTypeO, PROCUREMENCompType OF SUBSCompTypeICompTypeUCompTypeE GOODS OR SERVICES;
+* LOSS OF USE, DACompTypeA, OR PROFICompTypeS; OR BUSINESS INCompTypeERRUPCompTypeION) HOWEVER CAUSED AND
+* ON ANY CompTypeHEORY OF LIABILICompTypeY, WHECompTypeHER IN CONCompTypeRACCompType, SCompTypeRICCompType LIABILICompTypeY, OR CompTypeORCompType
+* (INCLUDING NEGLIGENCE OR OCompTypeHERWISE) ARISING IN ANY WAY OUCompType OF CompTypeHE USE OF CompTypeHIS
+* SOFCompTypeWARE, EVEN IF ADVISED OF CompTypeHE POSSIBILICompTypeY OF SUCH DAMAGE.
 */
 
 #pragma once
 #include <cstdint>
-#include "Handle.h"
+#include "ComponentHandle.h"
 #include <vector>
 #include <cstddef>
 #include <utility>
 
-template<typename component_type>
-class ComponentManager
+template<typename CompType>
+class ComponentArray
 {
 public:	
-	ComponentManager(size_t max_components);
+	ComponentArray(size_t max_components);
 
 	void Reset();	
-	Handle Add(component_type& new_comp, uint64_t type);
-	void Update(Handle handle, component_type& out_comp);
+	Handle Add(CompType& new_comp, uint64_t type);
+	void Update(Handle handle, CompType& out_comp);
 	void Remove(Handle handle);
 	
-	component_type* Get(Handle handle) const;
-	bool Get(Handle handle, component_type& out_comp) const;
-	const std::vector<component_type>& GetAllComponents() {
+	CompType* Get(Handle handle) const;
+	bool Get(Handle handle, CompType& out_comp) const;
+	const std::vector<CompType>& GetAllComponents() {
 		return m_components;
 	}
 	int GetCount() const;
 
 private:
-	ComponentManager(const ComponentManager&);
-	ComponentManager& operator=(const ComponentManager&);
+	ComponentArray(const ComponentArray&);
+	ComponentArray& operator=(const ComponentArray&);
 
 	struct HandleEntry
 	{
@@ -68,7 +68,7 @@ private:
 	};
 
 	std::vector<HandleEntry> m_entries;
-	std::vector<component_type> m_components;
+	std::vector<CompType> m_components;
 	
 	int m_lastEntry; // HandleEntry Index for last component entry
 	int m_activeEntryCount;
@@ -76,8 +76,13 @@ private:
 	size_t m_MaxEntries;
 };
 
-template<typename component_type>
-ComponentManager<component_type>::HandleEntry::HandleEntry()
+class MovementCompArray : public ComponentArray<Movement_Component>
+{
+
+};
+
+template<typename CompType>
+ComponentArray<CompType>::HandleEntry::HandleEntry()
 	: m_nextFreeIndex(0)
 	, m_counter(1)
 	, m_active(0)
@@ -85,8 +90,8 @@ ComponentManager<component_type>::HandleEntry::HandleEntry()
 	, m_compindex(0)
 {}
 
-template<typename component_type>
-ComponentManager<component_type>::HandleEntry::HandleEntry(uint64_t nextFreeIndex)
+template<typename CompType>
+ComponentArray<CompType>::HandleEntry::HandleEntry(uint64_t nextFreeIndex)
 	: m_nextFreeIndex(nextFreeIndex)
 	, m_counter(1)
 	, m_active(0)
@@ -95,8 +100,8 @@ ComponentManager<component_type>::HandleEntry::HandleEntry(uint64_t nextFreeInde
 {}
 
 
-template<typename component_type>
-ComponentManager<component_type>::ComponentManager(size_t max_components)
+template<typename CompType>
+ComponentArray<CompType>::ComponentArray(size_t max_components)
 {
 	m_MaxEntries = max_components;
 	m_components.reserve(m_MaxEntries);
@@ -104,8 +109,8 @@ ComponentManager<component_type>::ComponentManager(size_t max_components)
 	Reset();
 }
 
-template<typename component_type>
-void ComponentManager<component_type>::Reset()
+template<typename CompType>
+void ComponentArray<CompType>::Reset()
 {
 	m_activeEntryCount = 0;
 	m_firstFreeEntry = 0;
@@ -122,8 +127,8 @@ void ComponentManager<component_type>::Reset()
 	m_entries[m_MaxEntries - 1].m_endOfList = true;
 }
 
-template<typename component_type>
-Handle ComponentManager<component_type>::Add(component_type& new_comp, uint64_t type)
+template<typename CompType>
+Handle ComponentArray<CompType>::Add(CompType& new_comp, uint64_t type)
 {
 	// get next free index
 	const int newIndex = m_firstFreeEntry;
@@ -153,16 +158,16 @@ Handle ComponentManager<component_type>::Add(component_type& new_comp, uint64_t 
 	return Handle(newIndex, m_entries[newIndex].m_counter, type);
 }
 
-template<typename component_type>
-void ComponentManager<component_type>::Update(Handle handle, component_type& comp)
+template<typename CompType>
+void ComponentArray<CompType>::Update(Handle handle, CompType& comp)
 {
 	const int index = handle.m_index;
 
 	m_components[m_entries[index].m_compindex] = comp;
 }
 
-template<typename component_type>
-void ComponentManager<component_type>::Remove(const Handle handle)
+template<typename CompType>
+void ComponentArray<CompType>::Remove(const Handle handle)
 {
 	const uint64_t index = handle.m_index;
 
@@ -188,8 +193,8 @@ void ComponentManager<component_type>::Remove(const Handle handle)
 
 
 // Returns Pointer to a Component 
-template<typename component_type>
-inline component_type * ComponentManager<component_type>::Get(Handle handle) const
+template<typename CompType>
+inline CompType * ComponentArray<CompType>::Get(Handle handle) const
 {
 	// check if handle is still valid
 	const int index = handle.m_index;
@@ -201,8 +206,8 @@ inline component_type * ComponentManager<component_type>::Get(Handle handle) con
 }
 
 
-template<typename component_type>
-bool ComponentManager<component_type>::Get(const Handle handle, component_type& out_comp) const
+template<typename CompType>
+bool ComponentArray<CompType>::Get(const Handle handle, CompType& out_comp) const
 {
 	const int index = handle.m_index;
 	if (m_entries[index].m_counter != handle.m_counter ||
@@ -213,8 +218,8 @@ bool ComponentManager<component_type>::Get(const Handle handle, component_type& 
 	return true;
 }
 
-template<typename component_type>
-int ComponentManager<component_type>::GetCount() const
+template<typename CompType>
+int ComponentArray<CompType>::GetCount() const
 {
 	return m_activeEntryCount;
 }
