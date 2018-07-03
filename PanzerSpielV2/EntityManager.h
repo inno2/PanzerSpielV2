@@ -39,7 +39,13 @@ public:
 
 	void AddComponent(EntityId ent, Component* compPtr, ComponentType type);
 	void RemoveComponent(EntityId ent, ComponentType type);
-	
+		
+	template<typename Comp>
+	bool GetComponent(EntityId ent, ComponentType type, Comp * comp_out);
+
+	template<typename Comp>
+	PackedArray<Comp>* GetAllComponentsByType(ComponentType type);
+
 	template<typename... comptypes>
 	std::vector<EntityId>& GetMatchingEntities(comptypes... filters);
 
@@ -52,9 +58,36 @@ private:
 	PackedArray<ComponentIndexLUTRow> m_Entities;
 };
 
+template<typename Comp>
+inline bool EntityManager::GetComponent(EntityId ent, ComponentType type, Comp* comp_out)
+{
+	// Check if entity even exists
+	void* buf = m_Entities.Get(ent);
+
+	if (buf == nullptr)	
+		return false;	
+
+	ComponentIndexLUTPair* cilutr = reinterpret_cast<ComponentIndexLUTPair*>(buf);
+	ComponentIndexLUTPair v1 = cilutr[type];
 
 
+	if (!v1.assigned)
+		return false;
 
+	IPackedArray* compArray = m_ComponentArrayLookupTable.at(type);
+	buf = compArray->Get(v1.index);
+
+	if (buf == nullptr)
+		return false;
+
+	comp_out = reinterpret_cast<Comp*>(buf);
+}
+
+template<typename Comp>
+inline PackedArray<Comp>* EntityManager::GetAllComponentsByType(ComponentType type)
+{
+	return reinterpret_cast<PackedArray<Comp>*>(m_ComponentArrayLookupTable[type]))	
+}
 
 template<typename... comptypes>
 inline std::vector<EntityId>& EntityManager::GetMatchingEntities(comptypes... filters)

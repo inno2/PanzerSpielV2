@@ -124,3 +124,4 @@ void EntityManager::RemoveComponent(EntityId ent, ComponentType type)
 	cilutr[type].index = 0;
 	cilutr[type].assigned = false;
 }
+

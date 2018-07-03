@@ -107,7 +107,6 @@ inline bool PackedArray<T>::Add(void * newEntry, ArrayIndex& newIndex)
 
 	// set index of corresponding entry
 	m_indices[newIndex].m_compindex = m_activeEntryCount;
-	T entry = *reinterpret_cast<T*>(newEntry);
 	m_entries.push_back(*reinterpret_cast<T*>(newEntry));
 
 	++m_activeEntryCount;
