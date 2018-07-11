@@ -40,6 +40,9 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Core\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Core\ECS\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -49,9 +52,6 @@
       <Filter>Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InputComponent.h">
       <Filter>Core\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputKeyState.h">

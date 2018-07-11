@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "Eigen\Dense"
 
-class Movement_Component : public Component
+class Movement_Component : public Component<Movement_Component>
 {
 public:
 	Eigen::Vector3f m_velocity;

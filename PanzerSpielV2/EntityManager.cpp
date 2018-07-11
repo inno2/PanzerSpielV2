@@ -2,10 +2,10 @@
 #include "EntityManager.h"
 #include "PackedArray.h"
 
-
 // Components
 #include "Movement_Component.h"
 #include "Transformation_Component.h"
+
 
 EntityManager::EntityManager(unsigned int max_entity_count)
 {
@@ -71,57 +71,5 @@ void EntityManager::DestroyEntity(EntityId ent)
 
 	m_Entities.Remove(ent);
 	m_EntityCount--;
-}
-
-void EntityManager::AddComponent(EntityId ent, Component* compPtr, ComponentType type)
-{
-	void* buf = m_Entities.Get(ent);
-	if (buf == nullptr)
-	{
-		return;
-	}
-			
-	ComponentIndexLUTPair* cilutr = reinterpret_cast<ComponentIndexLUTPair*>(buf);
-
-	// Check if a similar component already exists
-	if (cilutr[type].assigned)
-		return;
-
-	// Get correct component Array from the LUT
-	IPackedArray* compArray = m_ComponentArrayLookupTable.at(type);
-
-	// Add component to array
-	ArrayIndex newIndex;
-	if (!compArray->Add(reinterpret_cast<void*>(compPtr), newIndex))
-		return;
-
-	// Update the ComponentIndexLUT
-	cilutr[type].index = newIndex;
-	cilutr[type].assigned = true;
-}
-
-void EntityManager::RemoveComponent(EntityId ent, ComponentType type)
-{
-	void* buf = m_Entities.Get(ent);
-	if (buf == nullptr)
-	{
-		return;
-	}
-
-	ComponentIndexLUTPair* cilutr = reinterpret_cast<ComponentIndexLUTPair*>(buf);
-
-	// Check if a the component even exists
-	if (!cilutr[type].assigned)
-		return;
-
-	// Get correct component Array from the LUT
-	IPackedArray* compArray = m_ComponentArrayLookupTable.at(type);
-
-	// Remove component
-	compArray->Remove(cilutr[type].index);
-
-	// Update indexentry
-	cilutr[type].index = 0;
-	cilutr[type].assigned = false;
 }
 

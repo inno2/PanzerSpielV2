@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
@@ -131,7 +132,6 @@
     </ClInclude>
     <ClInclude Include="Turret_Interaction_Component.h" />
     <ClInclude Include="InputAlias.h" />
-    <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputKeyState.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="MovementSystem.h" />

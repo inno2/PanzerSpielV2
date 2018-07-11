@@ -1,4 +1,26 @@
-﻿  EntityManager.cpp
+﻿  Component.cpp
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(23): error C2475: "Component<Derived>::type": Neudefinition; "constexpr"-Spezifiziererkonflikt
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(19): note: Siehe Deklaration von "Component<Derived>::type"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(24): error C2447: "{": Funktionsheader fehlt - Parameterliste im alten Stil?
+  EntityManager.cpp
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(23): error C2475: "Component<Derived>::type": Neudefinition; "constexpr"-Spezifiziererkonflikt
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(19): note: Siehe Deklaration von "Component<Derived>::type"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(24): error C2447: "{": Funktionsheader fehlt - Parameterliste im alten Stil?
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): error C2131: Ausdruck wurde nicht zu einer Konstanten ausgewertet.
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: Fehler wurde durch den Aufruf einer nicht definierten Funktion oder eines nicht deklarierten "constexpr" verursacht
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: siehe Verwendung von "register_components"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(31): error C2970: "std::array": Vorlagenparameter "_Size": "total_component_types": Ein Ausdruck, der Objekte mit internen Links enthält, kann nicht als Nichttyp-Argument verwendet werden
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.14.26428\include\array(22): note: Siehe Deklaration von "std::array"
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: Siehe Deklaration von "total_component_types"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.cpp(62): error C2065: "COMPONENT_MAX_TYPES": nichtdeklarierter Bezeichner
   Main.cpp
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(23): error C2475: "Component<Derived>::type": Neudefinition; "constexpr"-Spezifiziererkonflikt
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(19): note: Siehe Deklaration von "Component<Derived>::type"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\component.h(24): error C2447: "{": Funktionsheader fehlt - Parameterliste im alten Stil?
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): error C2131: Ausdruck wurde nicht zu einer Konstanten ausgewertet.
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: Fehler wurde durch den Aufruf einer nicht definierten Funktion oder eines nicht deklarierten "constexpr" verursacht
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: siehe Verwendung von "register_components"
+c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(31): error C2970: "std::array": Vorlagenparameter "_Size": "total_component_types": Ein Ausdruck, der Objekte mit internen Links enthält, kann nicht als Nichttyp-Argument verwendet werden
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.14.26428\include\array(22): note: Siehe Deklaration von "std::array"
+  c:\users\robin\documents\github\panzerspielv2\panzerspielv2\entitymanager.h(9): note: Siehe Deklaration von "total_component_types"
   Code wird generiert...
-  PanzerSpielV2.vcxproj -> C:\Users\Robin\Documents\Github\PanzerSpielV2\x64\Debug\PanzerSpielV2.exe
