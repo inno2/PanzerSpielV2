@@ -8,3 +8,5 @@ public:
 	Eigen::Vector3f m_position;
 	Eigen::Vector3f m_orientation;
 };
+
+ComponentType Transformation_Component::type = ComponentType::TransformationComponent;

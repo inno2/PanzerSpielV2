@@ -11,7 +11,7 @@ EntityManager::EntityManager(unsigned int max_entity_count)
 {
 	m_EntityCount = 0;
 	m_MaxEntityCount = max_entity_count;
-	m_Entities.Init(max_entity_count);
+	m_Entities.init(max_entity_count);
 	
 	// Create ComponentArrays:
 	m_ComponentArrayLookupTable.push_back(new PackedArray<Movement_Component>(max_entity_count));
@@ -38,7 +38,7 @@ EntityId EntityManager::CreateEntity()
 	EntityId newID;
 
 	// Add entity and retrieve new Id
-	if (!m_Entities.Add(&entry, newID))
+	if (!m_Entities.add(entry, newID))
 		return 0;
 
 	// Add one to the entitycount
@@ -49,27 +49,33 @@ EntityId EntityManager::CreateEntity()
 
 void EntityManager::DestroyEntity(EntityId ent)
 {
-	// Check if entity even exists
-	
-	void* buf = m_Entities.Get(ent);
-	if (buf == nullptr)
-	{
+	ComponentIndexLUTRow componentLUT;
+	ZeroMemory(&componentLUT, sizeof(componentLUT));
+
+	if (!m_Entities.get(ent, componentLUT)) {
 		return;
-	}
+	}	
 
-	ComponentIndexLUTPair* cilutr = reinterpret_cast<ComponentIndexLUTPair*>(buf);
+	ComponentIndexPair componentIndexPair;
 
-	for(unsigned int type = 0; type < COMPONENT_MAX_TYPES; type++)
+	for(unsigned int type = 0; type < COMPONENT_MAX_TYPE; type++)
 	{
-		if (cilutr->assigned)
+		componentIndexPair = componentLUT.at(type);
+		if (componentIndexPair.assigned)
 		{
 			IPackedArray* compArray = m_ComponentArrayLookupTable.at(type);
-			compArray->Remove(cilutr->index);
+			compArray->remove(componentIndexPair.index);
 		}
-		cilutr++;
 	}
 
-	m_Entities.Remove(ent);
+	m_Entities.remove(ent);
 	m_EntityCount--;
+}
+
+std::vector<EntityId>& EntityManager::get_entities(const std::vector<ComponentType>& filter)
+{
+	std::vector<EntityId> entitys;
+
+	
 }
 

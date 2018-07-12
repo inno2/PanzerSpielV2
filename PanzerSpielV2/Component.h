@@ -1,38 +1,25 @@
 #pragma once
 #include <type_traits>
 
-using ComponentType = unsigned int;
+#define COMPONENT_MAX_TYPE (ComponentType::TotalComponentTypes)
 
-constexpr unsigned int register_components();
-const unsigned int total_component_types = register_components();
-
-class BaseComponent
+enum ComponentType
 {
-public:
-	static ComponentType type_counter;
+	MovementComponent = 0,
+	TransformationComponent,
+	TotalComponentTypes
 };
 
 
 template <class Derived>
-class Component : public BaseComponent
+class Component 
 {
 	friend class EntityManager;
 
 private:
-	static ComponentType type();
+	static ComponentType type;
 };
 
-template<class Derived>
-inline constexpr ComponentType Component<Derived>::type()
-{
-	static type_ = type_counter++;
-	return type;
-}
 
-template<typename C>
-inline constexpr ComponentType get_type()
-{
-	return Component<typename std::remove_const<C>::type>::type();
-}
 
 

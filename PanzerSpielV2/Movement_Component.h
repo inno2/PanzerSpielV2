@@ -8,3 +8,5 @@ public:
 	Eigen::Vector3f m_velocity;
 	Eigen::Vector3f m_rotation;
 };
+
+ComponentType Movement_Component::type = ComponentType::MovementComponent;

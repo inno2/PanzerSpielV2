@@ -22,6 +22,9 @@
     <Filter Include="Core\ECS\Systems">
       <UniqueIdentifier>{70bd651e-7862-49a0-b1bc-a071833261dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Utility\Logger">
+      <UniqueIdentifier>{355886d9-da25-447f-84fb-8e2f4db51187}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -40,8 +43,8 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Core\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Core\ECS\Components</Filter>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Core\Utility\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,5 +94,8 @@
       <Filter>Core\ECS</Filter>
     </ClInclude>
     <ClInclude Include="TODO.txt" />
+    <ClInclude Include="Logger.h">
+      <Filter>Core\Utility\Logger</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

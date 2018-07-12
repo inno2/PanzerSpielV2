@@ -7,12 +7,9 @@ using ArrayIndex = unsigned int;
 class IPackedArray
 {
 public:
-	virtual bool Add(void * newEntry, ArrayIndex & newIndex) = 0;
-	virtual void Remove(const ArrayIndex index) = 0;
-	virtual void* Get(const ArrayIndex index) = 0;
-	virtual void* GetAll() = 0;
-	virtual unsigned int Count() = 0;
-	virtual void Reset() = 0;
+	virtual void remove(ArrayIndex index) = 0;
+	virtual unsigned int count() = 0;
+	virtual void reset() = 0;
 };
 
 
@@ -37,18 +34,19 @@ public:
 	PackedArray();
 	~PackedArray();
 
-	void Init(unsigned int max_entries);
+	void init(unsigned int max_entries);
 
 	T* begin() { return m_entries; }
 	T* end() { return m_entries + m_Size; }
 
 	// Geerbt über IPackedArray
-	virtual bool Add(void * newEntry, ArrayIndex & newIndex) override;
-	virtual void Remove(const ArrayIndex index) override;
-	virtual void* Get(const ArrayIndex index) override;
-	virtual void * GetAll() override;
-	virtual unsigned int Count() override;
-	virtual void Reset() override;
+	virtual unsigned int count() override;
+	virtual void reset() override;
+	void remove(ArrayIndex index);
+
+	bool add(const T& newEntry, ArrayIndex& newIndex);	
+	bool get(ArrayIndex index, T& comp_out);
+	std::vector<T>& get_all();
 
 private:
 	ArrayIndex m_lastEntry; // HandleEntry Index for last component entry
@@ -64,7 +62,7 @@ private:
 template<class T>
 inline PackedArray<T>::PackedArray(unsigned int max_entries)
 {
-	Init(max_entries);
+	init(max_entries);
 }
 
 template<class T>
@@ -72,8 +70,6 @@ inline PackedArray<T>::PackedArray()
 {
 	m_MaxEntries = 0;
 }
-
-
 
 template<class T>
 inline PackedArray<T>::~PackedArray()
@@ -83,47 +79,19 @@ inline PackedArray<T>::~PackedArray()
 }
 
 template<class T>
-inline void PackedArray<T>::Init(unsigned int max_entries)
+inline void PackedArray<T>::init(unsigned int max_entries)
 {
 	m_MaxEntries = max_entries;
 	m_indices.reserve(max_entries);
 	m_entries.reserve(max_entries);
-	Reset();
+	reset();
 }
 
-template<class T>
-inline bool PackedArray<T>::Add(void * newEntry, ArrayIndex& newIndex)
-{
-	if (m_MaxEntries == 0)
-		return false;
-
-	// get next free index
-	newIndex = m_firstFreeEntry;
-	m_firstFreeEntry = m_indices[newIndex].m_nextFreeIndex;
-	m_indices[newIndex].m_nextFreeIndex = 0;
-
-	// set active
-	m_indices[newIndex].m_active = true;
-
-	// set index of corresponding entry
-	m_indices[newIndex].m_compindex = m_activeEntryCount;
-	m_entries.push_back(*reinterpret_cast<T*>(newEntry));
-
-	++m_activeEntryCount;
-
-	// update lastentry
-	m_indices[newIndex].m_previous_lastEntry = m_lastEntry;
-	m_lastEntry = newIndex;
-
-	m_Size += sizeof(T);
-
-	return true;
-}
 
 template<class T>
-inline void PackedArray<T>::Remove(const ArrayIndex index)
+inline void PackedArray<T>::remove(ArrayIndex index)
 {
-	if (m_MaxEntries == 0)
+	if (m_MaxEntries == 0 || m_activeEntryCount == 0)
 		return;
 
 	if (m_indices[index].m_active == false)
@@ -147,31 +115,32 @@ inline void PackedArray<T>::Remove(const ArrayIndex index)
 }
 
 template<class T>
-inline void* PackedArray<T>::Get(const ArrayIndex index)
+inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 {
 	if (m_MaxEntries == 0)
-		return nullptr;
+		return false;
 
 	if (m_indices[index].m_active != true)
-		return nullptr;
+		return false;
 
-	return reinterpret_cast<void*>(&m_entries.at(m_indices[index].m_compindex));
+	comp_out = m_entries.at(m_indices[index].m_compindex);
+	return true;
 }
 
 template<class T>
-inline void * PackedArray<T>::GetAll()
+inline std::vector<T>& PackedArray<T>::get_all()
 {
-	return &m_entries[0];
+	return m_entries;
 }
 
 template<class T>
-inline unsigned int PackedArray<T>::Count()
+inline unsigned int PackedArray<T>::count()
 {
 	return m_activeEntryCount;
 }
 
 template<class T>
-inline void PackedArray<T>::Reset()
+inline void PackedArray<T>::reset()
 {
 	m_activeEntryCount = 0;
 	m_firstFreeEntry = 0;
@@ -187,6 +156,35 @@ inline void PackedArray<T>::Reset()
 	}
 	m_indices.push_back(IndexEntry());
 	m_indices[m_MaxEntries - 1].m_endOfList = true;
+}
+
+template<class T>
+inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
+{
+	if (m_MaxEntries == 0 || m_activeEntryCount == m_MaxEntries)
+		return false;
+
+	// get next free index
+	newIndex = m_firstFreeEntry;
+	m_firstFreeEntry = m_indices[newIndex].m_nextFreeIndex;
+	m_indices[newIndex].m_nextFreeIndex = 0;
+
+	// set active
+	m_indices[newIndex].m_active = true;
+
+	// set index of corresponding entry
+	m_indices[newIndex].m_compindex = m_activeEntryCount;
+	m_entries.push_back(newEntry);
+
+	++m_activeEntryCount;
+
+	// update lastentry
+	m_indices[newIndex].m_previous_lastEntry = m_lastEntry;
+	m_lastEntry = newIndex;
+
+	m_Size += sizeof(T);
+
+	return true;
 }
 
 template<class T>
