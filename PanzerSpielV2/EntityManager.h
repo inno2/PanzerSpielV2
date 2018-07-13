@@ -55,13 +55,15 @@ public:
 	template<typename C>
 	ComponentType get_component_type();
 
+	bool entity_exists(EntityId ent);
+
 private:
 	// Component Index and Component Array Fast Lookup Array
-	ComponentArrayLUT m_ComponentArrayLookupTable;
+	ComponentArrayLUT m_componentArrayLUT;
 
-	unsigned int m_EntityCount;
-	unsigned int m_MaxEntityCount;
-	PackedArray<ComponentIndexLUTRow> m_Entities;
+	unsigned int m_entity_count;
+	unsigned int m_max_entity_count;
+	PackedArray<ComponentIndexLUTRow> m_entities;
 };
 
 
@@ -70,20 +72,20 @@ private:
 template<typename C>
 inline void EntityManager::add_component(EntityId ent, const C& comp)
 {
-	static ComponentType type = get_type<C>();	
-	static ComponentIndexLUTRow componentLUT;
+	static ComponentType type = get_type<C>();			
 
-	if (!m_Entities.get(ent, componentLUT)) {
+	if (!entity_exists(ent))
 		return;
-	}
-	
+
+	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
+
 	// Check if a similar component already exists
 	ComponentIndexPair& componentIndexPair = componentLUT.at(type);
 	if (componentIndexPair.assigned)
 		return;
 
 	// Get correct component Array from the LUT
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_ComponentArrayLookupTable.at(type);
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 
 	// Add component to array
 	ArrayIndex newIndex;
@@ -101,11 +103,11 @@ template<typename C>
 inline void EntityManager::remove_component(EntityId ent)
 {
 	static ComponentType type = get_type<C>();
-	static ComponentIndexLUTRow componentLUT;
 
-	if (!m_Entities.get(ent, componentLUT)) {
+	if (!entity_exists(ent))
 		return;
-	}
+
+	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
 
 	// Check if a the component even exists
 	ComponentIndexPair& componentIndexPair = componentLUT.at(type);	
@@ -113,7 +115,7 @@ inline void EntityManager::remove_component(EntityId ent)
 		return;
 
 	// Get correct component Array from the LUT
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_ComponentArrayLookupTable.at(type);
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 
 	// Remove component
 	compArray->remove(componentIndexPair.index);
@@ -127,18 +129,19 @@ template<typename C>
 inline bool EntityManager::get_component(EntityId ent, C& comp_out)
 {
 	static ComponentType type = get_type<C>();		
-	static ComponentIndexLUTRow componentLUT;
 
-	if (!m_Entities.get(ent, componentLUT))	{
-		return false;
-	}
+	if (!entity_exists(ent))
+		return;
 
+	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
+	
 	ComponentIndexPair componentIndexPair = componentLUT.at(type);
 	
+	// Check if component exists
 	if (!componentIndexPair.assigned)
 		return false;
 
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_ComponentArrayLookupTable.at(type);
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 	C& comp_out = compArray->get(componentIndexPair.index);
 }
 
@@ -146,9 +149,9 @@ template<typename C>
 inline std::vector<C>& EntityManager::get_all_components()
 {
 	static ComponentType type = get_type<C>();
-
+	
 	// Get correct component Array from the LUT
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_ComponentArrayLookupTable.at(type);
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 
 	return compArray->get_all();
 

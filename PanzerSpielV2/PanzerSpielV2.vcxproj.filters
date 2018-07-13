@@ -90,12 +90,12 @@
     <ClInclude Include="EntityManager.h">
       <Filter>Core\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="PackedArray.h">
-      <Filter>Core\ECS</Filter>
-    </ClInclude>
     <ClInclude Include="TODO.txt" />
     <ClInclude Include="Logger.h">
       <Filter>Core\Utility\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="PackedArray.h">
+      <Filter>Core\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

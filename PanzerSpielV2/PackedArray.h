@@ -8,6 +8,7 @@ class IPackedArray
 {
 public:
 	virtual void remove(ArrayIndex index) = 0;
+	virutal bool exists(ArrayIndex index) = 0;
 	virtual unsigned int count() = 0;
 	virtual void reset() = 0;
 };
@@ -42,10 +43,12 @@ public:
 	// Geerbt über IPackedArray
 	virtual unsigned int count() override;
 	virtual void reset() override;
-	void remove(ArrayIndex index);
+	void remove(ArrayIndex index) override;
+	inline bool exists(ArrayIndex index) override;
 
 	bool add(const T& newEntry, ArrayIndex& newIndex);	
 	bool get(ArrayIndex index, T& comp_out);
+	T& get(ArrayIndex index);
 	std::vector<T>& get_all();
 
 private:
@@ -115,6 +118,15 @@ inline void PackedArray<T>::remove(ArrayIndex index)
 }
 
 template<class T>
+inline bool PackedArray<T>::exists(ArrayIndex index)
+{
+	if (index > m_MaxEntries)
+		return false;
+
+	return m_indices[index].m_active;
+}
+
+template<class T>
 inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 {
 	if (m_MaxEntries == 0)
@@ -125,6 +137,19 @@ inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 
 	comp_out = m_entries.at(m_indices[index].m_compindex);
 	return true;
+}
+
+template<class T>
+inline T& PackedArray<T>::get(ArrayIndex index)
+{
+	if (exists(index))
+	{
+		return m_entries.at(m_indices[index].m_compindex);
+	}
+	else
+	{
+		return T();
+	}
 }
 
 template<class T>

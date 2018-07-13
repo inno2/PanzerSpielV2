@@ -1,4 +1,4 @@
-#include "Windows.h"
+#include <windows.h>
 #include "EntityManager.h"
 #include "PackedArray.h"
 
@@ -9,19 +9,19 @@
 
 EntityManager::EntityManager(unsigned int max_entity_count)
 {
-	m_EntityCount = 0;
-	m_MaxEntityCount = max_entity_count;
-	m_Entities.init(max_entity_count);
+	m_entity_count = 0;
+	m_max_entity_count = max_entity_count;
+	m_entities.init(max_entity_count);
 	
 	// Create ComponentArrays:
-	m_ComponentArrayLookupTable.push_back(new PackedArray<Movement_Component>(max_entity_count));
-	m_ComponentArrayLookupTable.push_back(new PackedArray<Transformation_Component>(max_entity_count));
+	m_componentArrayLUT.push_back(new PackedArray<Movement_Component>(max_entity_count));
+	m_componentArrayLUT.push_back(new PackedArray<Transformation_Component>(max_entity_count));
 }
 
 EntityManager::~EntityManager()
 {
 	// Delete ComponentArrays:
-	for (auto pa : m_ComponentArrayLookupTable)
+	for (auto pa : m_componentArrayLUT)
 	{
 		delete pa;
 	}
@@ -30,7 +30,7 @@ EntityManager::~EntityManager()
 EntityId EntityManager::CreateEntity()
 {
 	// Dont create more than allowed
-	if (m_EntityCount == m_MaxEntityCount)
+	if (m_entity_count == m_max_entity_count)
 		return 0;
 
 	ComponentIndexLUTRow entry;
@@ -38,11 +38,11 @@ EntityId EntityManager::CreateEntity()
 	EntityId newID;
 
 	// Add entity and retrieve new Id
-	if (!m_Entities.add(entry, newID))
+	if (!m_entities.add(entry, newID))
 		return 0;
 
 	// Add one to the entitycount
-	m_EntityCount++;
+	m_entity_count++;
 	
 	return newID;
 }
@@ -52,7 +52,7 @@ void EntityManager::DestroyEntity(EntityId ent)
 	ComponentIndexLUTRow componentLUT;
 	ZeroMemory(&componentLUT, sizeof(componentLUT));
 
-	if (!m_Entities.get(ent, componentLUT)) {
+	if (!m_entities.get(ent, componentLUT)) {
 		return;
 	}	
 
@@ -63,13 +63,13 @@ void EntityManager::DestroyEntity(EntityId ent)
 		componentIndexPair = componentLUT.at(type);
 		if (componentIndexPair.assigned)
 		{
-			IPackedArray* compArray = m_ComponentArrayLookupTable.at(type);
+			IPackedArray* compArray = m_componentArrayLUT.at(type);
 			compArray->remove(componentIndexPair.index);
 		}
 	}
 
-	m_Entities.remove(ent);
-	m_EntityCount--;
+	m_entities.remove(ent);
+	m_entity_count--;
 }
 
 std::vector<EntityId>& EntityManager::get_entities(const std::vector<ComponentType>& filter)
@@ -77,5 +77,10 @@ std::vector<EntityId>& EntityManager::get_entities(const std::vector<ComponentTy
 	std::vector<EntityId> entitys;
 
 	
+}
+
+bool EntityManager::entity_exists(EntityId ent)
+{
+	return m_entities.exists(ent);
 }
 
