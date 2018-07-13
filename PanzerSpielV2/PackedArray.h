@@ -145,17 +145,11 @@ inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 	return true;
 }
 
+// Always check first if the give index exists, with exists()
 template<class T>
 inline T& PackedArray<T>::get(ArrayIndex index)
-{
-	if (exists(index))
-	{
-		return m_entries.at(m_indices[index].m_compindex).data;
-	}
-	else
-	{
-		return T();
-	}
+{	
+	return m_entries.at(m_indices[index].m_compindex).data;
 }
 
 template<class T>

@@ -48,13 +48,10 @@ public:
 	bool get_component(EntityId ent, C& comp_out);
 
 	template<typename C>
-	std::vector<C>& get_all_components();
+	std::vector<DataEntry<C>>& get_all_components();
 		
 	std::vector<EntityId> get_entities(const std::vector<ComponentType>& filter);
-
-	template<typename C>
-	void check_single_component(const ComponentIndexLUTRow & componentIndexLutrow, bool & match);
-
+	
 	template<typename ...Args>
 	std::vector<EntityId>& get_entities2();
 
@@ -62,6 +59,9 @@ public:
 	ComponentType get_component_type();
 
 	bool entity_exists(EntityId ent);
+private:
+	template<typename C>
+	void check_single_component(const ComponentIndexLUTRow & componentIndexLutrow, bool & match); // internally used by get_entites2
 
 private:
 	// Component Index and Component Array Fast Lookup Array
@@ -81,7 +81,7 @@ inline void EntityManager::add_component(EntityId ent, const C& comp)
 {
 	static ComponentType type = get_type<C>();			
 
-	if (!entity_exists(ent))
+	if (!m_entities.exists(ent))
 		return;
 
 	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
@@ -157,7 +157,7 @@ inline bool EntityManager::get_component(EntityId ent, C& comp_out)
 }
 
 template<typename C>
-inline std::vector<C>& EntityManager::get_all_components()
+inline std::vector<DataEntry<C>>& EntityManager::get_all_components()
 {
 	static ComponentType type = get_type<C>();
 	
