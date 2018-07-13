@@ -8,11 +8,18 @@ class IPackedArray
 {
 public:
 	virtual void remove(ArrayIndex index) = 0;
-	virutal bool exists(ArrayIndex index) = 0;
+	virtual bool exists(ArrayIndex index) = 0;
 	virtual unsigned int count() = 0;
 	virtual void reset() = 0;
 };
 
+template<class T>
+struct DataEntry
+{
+	DataEntry(ArrayIndex index_, T data_) : index(index_), data(data_) {}
+	ArrayIndex index;
+	T data;
+};
 
 template <class T>
 class PackedArray : public IPackedArray
@@ -28,7 +35,6 @@ class PackedArray : public IPackedArray
 		bool m_active;
 		bool m_endOfList;
 	};
-
 
 public:
 	PackedArray(unsigned int max_entries);
@@ -49,7 +55,7 @@ public:
 	bool add(const T& newEntry, ArrayIndex& newIndex);	
 	bool get(ArrayIndex index, T& comp_out);
 	T& get(ArrayIndex index);
-	std::vector<T>& get_all();
+	std::vector<DataEntry<T>>& get_all();
 
 private:
 	ArrayIndex m_lastEntry; // HandleEntry Index for last component entry
@@ -59,7 +65,7 @@ private:
 	size_t m_Size;
 
 	std::vector<IndexEntry> m_indices;
-	std::vector<T> m_entries;
+	std::vector<DataEntry<T>> m_entries;
 };
 
 template<class T>
@@ -135,7 +141,7 @@ inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 	if (m_indices[index].m_active != true)
 		return false;
 
-	comp_out = m_entries.at(m_indices[index].m_compindex);
+	comp_out = m_entries.at(m_indices[index].m_compindex).data;
 	return true;
 }
 
@@ -144,7 +150,7 @@ inline T& PackedArray<T>::get(ArrayIndex index)
 {
 	if (exists(index))
 	{
-		return m_entries.at(m_indices[index].m_compindex);
+		return m_entries.at(m_indices[index].m_compindex).data;
 	}
 	else
 	{
@@ -153,7 +159,7 @@ inline T& PackedArray<T>::get(ArrayIndex index)
 }
 
 template<class T>
-inline std::vector<T>& PackedArray<T>::get_all()
+inline std::vector<DataEntry<T>>& PackedArray<T>::get_all()
 {
 	return m_entries;
 }
@@ -199,7 +205,8 @@ inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
 
 	// set index of corresponding entry
 	m_indices[newIndex].m_compindex = m_activeEntryCount;
-	m_entries.push_back(newEntry);
+
+	m_entries.push_back(DataEntry<T>(newIndex, newEntry));
 
 	++m_activeEntryCount;
 

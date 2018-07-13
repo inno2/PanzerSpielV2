@@ -50,7 +50,13 @@ public:
 	template<typename C>
 	std::vector<C>& get_all_components();
 		
-	std::vector<EntityId>& get_entities(const std::vector<ComponentType>& filter);
+	std::vector<EntityId> get_entities(const std::vector<ComponentType>& filter);
+
+	template<typename C>
+	void check_single_component(const ComponentIndexLUTRow & componentIndexLutrow, bool & match);
+
+	template<typename ...Args>
+	std::vector<EntityId>& get_entities2();
 
 	template<typename C>
 	ComponentType get_component_type();
@@ -61,6 +67,7 @@ private:
 	// Component Index and Component Array Fast Lookup Array
 	ComponentArrayLUT m_componentArrayLUT;
 
+	bool m_entites_changed;
 	unsigned int m_entity_count;
 	unsigned int m_max_entity_count;
 	PackedArray<ComponentIndexLUTRow> m_entities;
@@ -97,6 +104,8 @@ inline void EntityManager::add_component(EntityId ent, const C& comp)
 	// Update the ComponentIndexLUT
 	componentIndexPair.index = newIndex;
 	componentIndexPair.assigned = true;
+
+	m_entites_changed = true;
 }
 
 template<typename C>
@@ -123,6 +132,8 @@ inline void EntityManager::remove_component(EntityId ent)
 	// Update indexentry
 	componentIndexPair.index = 0;
 	componentIndexPair.assigned = false;
+
+	m_entites_changed = true;
 }
 
 template<typename C>
@@ -155,6 +166,35 @@ inline std::vector<C>& EntityManager::get_all_components()
 
 	return compArray->get_all();
 
+}
+
+template<typename C>
+inline void  EntityManager::check_single_component(const ComponentIndexLUTRow& componentIndexLutrow, bool& match)
+{
+	static ComponentType type = get_type<C>();
+	if (!componentIndexLutrow[type].assigned)
+		match = false;
+}
+
+template<typename ...ComponentTypes>
+inline std::vector<EntityId>& EntityManager::get_entities2()
+{
+	static std::vector<EntityId> entities;
+
+	if (!m_entites_changed)
+		return entities;
+
+	for each(const PackedArray<ComponentIndexLUTRow>::DataEntry& ent_data in m_entities.get_all())
+	{
+		bool match = true;
+		//https://stackoverflow.com/questions/21180346/variadic-template-unpacking-arguments-to-typename
+		int dummy[]{ 0, (check_single_component<ComponentTypes>(ent_data, match), 0)... };
+
+		if (match)
+			entities.push_back(id);
+	}
+	m_entites_changed = false;
+	return entities;
 }
 
 template<typename C>
