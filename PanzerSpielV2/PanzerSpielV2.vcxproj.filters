@@ -28,6 +28,9 @@
     <Filter Include="Core\Utility\tinyobjloader">
       <UniqueIdentifier>{4691fa37-652e-4874-a01a-6762a2e0e172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Graphics\Shader">
+      <UniqueIdentifier>{4ead300b-96f9-474c-a386-8a138b39b3c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -49,17 +52,22 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Core\Utility\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicSystem.cpp" />
     <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
       <Filter>Core\Utility\tinyobjloader</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicSystem.cpp">
+      <Filter>Core\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Render.cpp">
+      <Filter>Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Core\Graphics\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicSystem.h">
-      <Filter>Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Core\ECS\Components</Filter>
@@ -107,5 +115,34 @@
     <ClInclude Include="tinyobjloader\tiny_obj_loader.h">
       <Filter>Core\Utility\tinyobjloader</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicSystem.h">
+      <Filter>Core\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Render.h">
+      <Filter>Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Core\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D11.h">
+      <Filter>Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PSColor.hlsl">
+      <Filter>Core\Graphics\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="PSTexture.hlsl">
+      <Filter>Core\Graphics\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VSColor.hlsl">
+      <Filter>Core\Graphics\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VSTexture.hlsl">
+      <Filter>Core\Graphics\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

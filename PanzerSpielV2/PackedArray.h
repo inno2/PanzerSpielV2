@@ -43,8 +43,8 @@ public:
 
 	void init(unsigned int max_entries);
 
-	T* begin() { return m_entries; }
-	T* end() { return m_entries + m_Size; }
+	DataEntry<T>* begin() { return m_entries; }
+	DataEntry<T>* end() { return m_entries + m_Size; }
 
 	// Geerbt über IPackedArray
 	virtual unsigned int count() override;
@@ -118,7 +118,7 @@ inline void PackedArray<T>::remove(ArrayIndex index)
 	m_indices[m_lastEntry].m_compindex = m_indices[index].m_compindex;
 	m_lastEntry = m_indices[m_lastEntry].m_previous_lastEntry;
 
-	m_Size -= sizeof(T);
+	m_Size -= sizeof(DataEntry<T>);
 
 	--m_activeEntryCount;
 }
@@ -208,7 +208,7 @@ inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
 	m_indices[newIndex].m_previous_lastEntry = m_lastEntry;
 	m_lastEntry = newIndex;
 
-	m_Size += sizeof(T);
+	m_Size += sizeof(DataEntry<T>);
 
 	return true;
 }
