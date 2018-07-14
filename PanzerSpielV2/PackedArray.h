@@ -126,7 +126,7 @@ inline void PackedArray<T>::remove(ArrayIndex index)
 template<class T>
 inline bool PackedArray<T>::exists(ArrayIndex index)
 {
-	if (index > m_MaxEntries)
+	if (index >= m_MaxEntries)
 		return false;
 
 	return m_indices[index].m_active;

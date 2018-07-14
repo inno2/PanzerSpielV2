@@ -25,6 +25,9 @@
     <Filter Include="Core\Utility\Logger">
       <UniqueIdentifier>{355886d9-da25-447f-84fb-8e2f4db51187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Utility\tinyobjloader">
+      <UniqueIdentifier>{4691fa37-652e-4874-a01a-6762a2e0e172}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -45,6 +48,10 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Core\Utility\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicSystem.cpp" />
+    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
+      <Filter>Core\Utility\tinyobjloader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="PackedArray.h">
       <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyobjloader\tiny_obj_loader.h">
+      <Filter>Core\Utility\tinyobjloader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

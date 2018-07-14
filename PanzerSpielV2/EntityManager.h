@@ -59,6 +59,7 @@ public:
 	ComponentType get_component_type();
 
 	bool entity_exists(EntityId ent);
+
 private:
 	template<typename C>
 	void check_single_component(const ComponentIndexLUTRow & componentIndexLutrow, bool & match); // internally used by get_entites2
@@ -184,7 +185,7 @@ inline std::vector<EntityId>& EntityManager::get_entities2()
 	if (!m_entites_changed)
 		return entities;
 
-	for each(const PackedArray<ComponentIndexLUTRow>::DataEntry& ent_data in m_entities.get_all())
+	for each(const DataEntry<ComponentIndexLUTRow>& ent_data in m_entities.get_all())
 	{
 		bool match = true;
 		//https://stackoverflow.com/questions/21180346/variadic-template-unpacking-arguments-to-typename

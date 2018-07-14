@@ -82,7 +82,7 @@ std::vector<EntityId> EntityManager::get_entities(const std::vector<ComponentTyp
 	for each(const DataEntry<ComponentIndexLUTRow>& ent_data in m_entities.get_all())
 	{	
 		// check if each wanted component is available
-		bool match = false;
+		bool match = true;
 		for each(ComponentType type in filter)
 		{
 			if (!ent_data.data[type].assigned)
@@ -94,7 +94,7 @@ std::vector<EntityId> EntityManager::get_entities(const std::vector<ComponentTyp
 		}
 
 		if (match)
-			entitys.push_back(!ent_data.index);
+			entitys.push_back(ent_data.index);
 	}
 	return entitys;
 }

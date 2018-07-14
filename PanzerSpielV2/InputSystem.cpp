@@ -76,6 +76,7 @@ bool InputSystem::Update(microseconds deltatime)
 			DispatchMessage(&msg);
 		}	
 	}
+	return true;
 }
 
 void InputSystem::SetKeystate(uint32_t vkey, Key_State state)

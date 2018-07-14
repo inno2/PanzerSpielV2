@@ -3,16 +3,15 @@ c:\users\robin\documents\github\panzerspielv2\panzerspielv2\engine.cpp(72): warn
   EntityManager.cpp
 c:\users\robin\documents\github\panzerspielv2\panzerspielv2\movement_component.h(12): warning C4356: "Component<Movement_Component>::type": Statisches Datenmember darf nicht über eine abgeleitete Klasse initialisiert werden
 c:\users\robin\documents\github\panzerspielv2\panzerspielv2\transformation_component.h(12): warning C4356: "Component<Transformation_Component>::type": Statisches Datenmember darf nicht über eine abgeleitete Klasse initialisiert werden
+  GraphicSystem.cpp
   Logger.cpp
   InputSystem.cpp
 c:\users\robin\documents\github\panzerspielv2\panzerspielv2\inputsystem.cpp(47): warning C4244: "Argument": Konvertierung von "WPARAM" in "uint32_t", möglicher Datenverlust
 c:\users\robin\documents\github\panzerspielv2\panzerspielv2\inputsystem.cpp(53): warning C4244: "Argument": Konvertierung von "WPARAM" in "uint32_t", möglicher Datenverlust
   Main.cpp
-c:\users\robin\documents\github\panzerspielv2\panzerspielv2\movement_component.h(12): warning C4356: "Component<Movement_Component>::type": Statisches Datenmember darf nicht über eine abgeleitete Klasse initialisiert werden
-c:\users\robin\documents\github\panzerspielv2\panzerspielv2\transformation_component.h(12): warning C4356: "Component<Transformation_Component>::type": Statisches Datenmember darf nicht über eine abgeleitete Klasse initialisiert werden
   MovementSystem.cpp
   Tank_System.cpp
+  tiny_obj_loader.cc
   Code wird generiert...
-c:\users\robin\documents\github\panzerspielv2\panzerspielv2\inputsystem.cpp(79): warning C4715: "InputSystem::Update": Nicht alle Codepfade geben einen Wert zurück.
 c:\users\robin\documents\github\panzerspielv2\panzerspielv2\inputsystem.cpp(59): warning C4715: "InputSystem::WndProc": Nicht alle Codepfade geben einen Wert zurück.
   PanzerSpielV2.vcxproj -> C:\Users\Robin\Documents\Github\PanzerSpielV2\x64\Debug\PanzerSpielV2.exe
