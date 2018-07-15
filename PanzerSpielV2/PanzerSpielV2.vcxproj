@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="DX11Render.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -125,6 +126,7 @@
     <ClCompile Include="tinyobjloader\tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Direct3D11.h" />
