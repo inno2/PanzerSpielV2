@@ -121,6 +121,7 @@
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Tank_System.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="tinyobjloader\tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +137,7 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Tank_Interaction_Component.h" />
     <ClInclude Include="Tank_System.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="tinyobjloader\tiny_obj_loader.h" />
     <ClInclude Include="TODO.txt">
       <FileType>Text</FileType>

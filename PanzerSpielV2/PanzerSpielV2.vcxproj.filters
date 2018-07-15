@@ -64,6 +64,9 @@
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Core\Graphics\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -128,6 +131,9 @@
       <Filter>Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
       <Filter>Core\Utility</Filter>
     </ClInclude>
   </ItemGroup>
