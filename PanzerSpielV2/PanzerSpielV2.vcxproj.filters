@@ -31,6 +31,9 @@
     <Filter Include="Core\Graphics\Shader">
       <UniqueIdentifier>{4ead300b-96f9-474c-a386-8a138b39b3c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{fe66e76d-8a19-4fd0-8a0b-617237376403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
