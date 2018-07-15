@@ -43,8 +43,8 @@ public:
 
 	void init(unsigned int max_entries);
 
-	DataEntry<T>* begin() { return m_entries; }
-	DataEntry<T>* end() { return m_entries + m_Size; }
+	DataEntry<T>* begin() { return reinterpret_cast<DataEntry<T>*>(&m_entries); }
+	DataEntry<T>* end() { return reinterpret_cast<DataEntry<T>*>(&m_entries + m_Size); }
 
 	// Geerbt über IPackedArray
 	virtual unsigned int count() override;

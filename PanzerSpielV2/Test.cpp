@@ -53,7 +53,7 @@ Test::result Test::Test_PackedArray() {
 
 	//check count and entries
 	//check Count
-	if (UUT.count != 0) {
+	if (UUT.count() != 0) {
 		return Fail;
 	}
 
@@ -70,7 +70,7 @@ Test::result Test::Test_PackedArray() {
 	}
 
 	//check Count
-	if (UUT.count != amount) {
+	if (UUT.count() != amount) {
 		return Fail;
 	}
 	
@@ -91,7 +91,7 @@ Test::result Test::Test_PackedArray() {
 
 	//check count and entries
 	//check Count
-	if (UUT.count != (unsigned int)(amount / 2)) {
+	if (UUT.count() != (unsigned int)(amount / 2)) {
 		return Fail;
 	}
 	for (int i = 0; i < amount; i++) {
@@ -133,6 +133,6 @@ Test::result Test::Test_EntityManager() {
 	return result::Pass;
 }
 
-constexpr int Test::hash(int input) {
+int Test::hash(int input) {
 	return (input ^  (0x9e3779b9 + (input << 6) + (input >> 2)));
 }

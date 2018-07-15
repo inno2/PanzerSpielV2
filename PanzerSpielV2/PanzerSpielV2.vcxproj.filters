@@ -1,162 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Core">
-      <UniqueIdentifier>{6dea68af-0913-4ce0-86b6-d1c78a857a65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Graphics">
-      <UniqueIdentifier>{ce6bc1fe-8971-4e25-9025-4ffe6f5cc578}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility">
-      <UniqueIdentifier>{4dca4dfc-7b22-45e9-a373-96de32060b09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\Input">
-      <UniqueIdentifier>{0ddd0c63-4d21-4df2-a942-87cdd62f7e9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS">
-      <UniqueIdentifier>{65471faa-2cbd-4271-b523-75bbe10f0f9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS\Components">
-      <UniqueIdentifier>{9da4503c-4ccf-4726-a6d6-c265f95efde6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS\Systems">
-      <UniqueIdentifier>{70bd651e-7862-49a0-b1bc-a071833261dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\Logger">
-      <UniqueIdentifier>{355886d9-da25-447f-84fb-8e2f4db51187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\tinyobjloader">
-      <UniqueIdentifier>{4691fa37-652e-4874-a01a-6762a2e0e172}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Graphics\Shader">
-      <UniqueIdentifier>{4ead300b-96f9-474c-a386-8a138b39b3c4}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="PSColor.hlsl" />
+    <FxCompile Include="PSTexture.hlsl" />
+    <FxCompile Include="VSColor.hlsl" />
+    <FxCompile Include="VSTexture.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="DX11Render.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="GraphicSystem.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Engine.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementSystem.cpp">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_System.cpp">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Core\ECS</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Core\Utility\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
-      <Filter>Core\Utility\tinyobjloader</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicSystem.cpp">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11Render.cpp">
-      <Filter>Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderManager.cpp">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="AssetManager.cpp">
-=======
-    <ClCompile Include="Test.cpp">
->>>>>>> b6453f58bc8331fb2d96d38fc1a9bcdf87796c37
-      <Filter>Core\Utility</Filter>
-    </ClCompile>
+    <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="Tank_System.cpp" />
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InputKeyState.h">
-      <Filter>Core\Utility\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputAlias.h">
-      <Filter>Core\Utility\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Movement_Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Transformation_Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementSystem.h">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Turret_Interaction_Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_Interaction_Component.h">
-      <Filter>Core\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_System.h">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Core\ECS</Filter>
-    </ClInclude>
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Direct3D11.h" />
+    <ClInclude Include="DX11Render.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="PackedArray.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="GraphicSystem.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Tank_Interaction_Component.h" />
+    <ClInclude Include="Tank_System.h" />
+    <ClInclude Include="Test.h" />
+    <ClInclude Include="tinyobjloader\tiny_obj_loader.h" />
     <ClInclude Include="TODO.txt" />
-    <ClInclude Include="Logger.h">
-      <Filter>Core\Utility\Logger</Filter>
-    </ClInclude>
-    <ClInclude Include="PackedArray.h">
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyobjloader\tiny_obj_loader.h">
-      <Filter>Core\Utility\tinyobjloader</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicSystem.h">
-      <Filter>Core\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11Render.h">
-      <Filter>Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderManager.h">
-      <Filter>Core\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct3D11.h">
-      <Filter>Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="AssetManager.h">
-=======
-    <ClInclude Include="Test.h">
->>>>>>> b6453f58bc8331fb2d96d38fc1a9bcdf87796c37
-      <Filter>Core\Utility</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="PSColor.hlsl">
-      <Filter>Core\Graphics\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="PSTexture.hlsl">
-      <Filter>Core\Graphics\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="VSColor.hlsl">
-      <Filter>Core\Graphics\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="VSTexture.hlsl">
-      <Filter>Core\Graphics\Shader</Filter>
-    </FxCompile>
+    <ClInclude Include="Turret_Interaction_Component.h" />
+    <ClInclude Include="InputAlias.h" />
+    <ClInclude Include="InputKeyState.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="Movement_Component.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="Transformation_Component.h" />
   </ItemGroup>
 </Project>

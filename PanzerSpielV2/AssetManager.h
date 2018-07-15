@@ -14,5 +14,4 @@ public:
 	void LoadObject(std::string filename);
 
 private:
-	std::unordered_map<
 };
