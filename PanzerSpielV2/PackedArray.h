@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include <vector>
+#include <iterator>
 
 using ArrayIndex = unsigned int;
 
@@ -24,6 +25,8 @@ struct DataEntry
 template <class T>
 class PackedArray : public IPackedArray
 {
+	using iterator = std::_Vector_iterator<std::_Vector_val<std::_Simple_types<DataEntry<T>>>>;
+
 	struct IndexEntry
 	{
 		IndexEntry();
@@ -31,7 +34,6 @@ class PackedArray : public IPackedArray
 
 		ArrayIndex m_nextFreeIndex;		
 		ArrayIndex m_compindex;
-		ArrayIndex m_previous_lastEntry;
 		bool m_active;
 		bool m_endOfList;
 	};
@@ -43,8 +45,8 @@ public:
 
 	void init(unsigned int max_entries);
 
-	DataEntry<T>* begin() { return reinterpret_cast<DataEntry<T>*>(&m_entries); }
-	DataEntry<T>* end() { return reinterpret_cast<DataEntry<T>*>(&m_entries + m_Size); }
+	iterator begin() { return m_entries.begin(); }
+	iterator end() { return m_entries.end(); }
 
 	// Geerbt über IPackedArray
 	virtual unsigned int count() override;
@@ -58,7 +60,6 @@ public:
 	std::vector<DataEntry<T>>& get_all();
 
 private:
-	ArrayIndex m_lastEntry; // HandleEntry Index for last component entry
 	unsigned int m_activeEntryCount;
 	unsigned int m_firstFreeEntry;
 	unsigned int m_MaxEntries;
@@ -110,13 +111,12 @@ inline void PackedArray<T>::remove(ArrayIndex index)
 	m_indices[index].m_active = 0;
 	m_firstFreeEntry = index;
 
+	// update compindex of the swapped component
+	m_indices[m_entries[m_activeEntryCount - 1].index].m_compindex = m_indices[index].m_compindex;
+
 	// swap component to be deleted with last component, then pop last position
 	std::swap(m_entries[m_indices[index].m_compindex], m_entries[m_activeEntryCount - 1]);
 	m_entries.pop_back();
-
-	// update compindex of the swapped component
-	m_indices[m_lastEntry].m_compindex = m_indices[index].m_compindex;
-	m_lastEntry = m_indices[m_lastEntry].m_previous_lastEntry;
 
 	m_Size -= sizeof(DataEntry<T>);
 
@@ -169,7 +169,7 @@ inline void PackedArray<T>::reset()
 {
 	m_activeEntryCount = 0;
 	m_firstFreeEntry = 0;
-	m_lastEntry = 0;
+	//m_lastEntry = 0;
 	m_Size = 0;
 
 	m_indices.clear();
@@ -203,10 +203,6 @@ inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
 	m_entries.push_back(DataEntry<T>(newIndex, newEntry));
 
 	++m_activeEntryCount;
-
-	// update lastentry
-	m_indices[newIndex].m_previous_lastEntry = m_lastEntry;
-	m_lastEntry = newIndex;
 
 	m_Size += sizeof(DataEntry<T>);
 

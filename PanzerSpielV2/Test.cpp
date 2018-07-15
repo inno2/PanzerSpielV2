@@ -3,6 +3,7 @@
 #include "EntityManager.h"
 
 
+
 //PackedArray(unsigned int max_entries);		tested
 //PackedArray();
 //~PackedArray();
@@ -75,14 +76,16 @@ Test::result Test::Test_PackedArray() {
 	}
 	
 	//check entries
-	for each (DataEntry<int> tmp in UUT){	//ist Reihenfolge im Speicher auch Prüfinhalt?
-		int i = 0;
+	int i = 0;
+	for each (auto tmp in UUT){	//ist Reihenfolge im Speicher auch Prüfinhalt?		
 		if (tmp.data != values[i]) {
 			return Fail;
 		}
 		i++;
 	}
 
+	if(i != amount)
+		return Fail;
 
 	//delete every second entry
 	for (int i = 0; i < amount; i += 2) {
@@ -116,14 +119,22 @@ Test::result Test::Test_PackedArray() {
 	}
 	//change some values
 	for (int i = ((amount/2) - 1); i >= 0; i--) {
-		int tmp;
-		tmp = UUT.get(indices[i]);
+		int& tmp = UUT.get(indices[i]);
 		
 		tmp = hash(-i);
 		values[i] = tmp;
 	}
 
 	//get all entries and compare
+	
+	auto tmp = UUT.get_all();
+	for (int i = 0; i < (amount / 2); i ++)
+	{
+		if (tmp.at(indices[i]).data != values[i]) {
+			return Fail;
+		}
+	}
+
 	//std::vector<int> *list = (std::vector<int>*)UUT.GetAll();
 	//Reset
 
