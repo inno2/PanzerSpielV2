@@ -64,7 +64,11 @@
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Core\Graphics\Shader</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="AssetManager.cpp">
+=======
+    <ClCompile Include="Test.cpp">
+>>>>>>> b6453f58bc8331fb2d96d38fc1a9bcdf87796c37
       <Filter>Core\Utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,7 +137,11 @@
     <ClInclude Include="Color.h">
       <Filter>Core\Utility</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="AssetManager.h">
+=======
+    <ClInclude Include="Test.h">
+>>>>>>> b6453f58bc8331fb2d96d38fc1a9bcdf87796c37
       <Filter>Core\Utility</Filter>
     </ClInclude>
   </ItemGroup>
