@@ -26,6 +26,9 @@ struct ComponentIndexPair
 
 class EntityManager
 {
+#ifdef _DEBUG
+	friend class Test;
+#endif
 	using ComponentIndexLUTRow = std::array<ComponentIndexPair, COMPONENT_MAX_TYPE>;
 	using ComponentIndexLUT = std::vector<ComponentIndexLUTRow>;
 
@@ -35,8 +38,8 @@ public:
 	EntityManager(unsigned int max_entities);
 	~EntityManager();
 
-	EntityId CreateEntity();
-	void DestroyEntity(EntityId id);
+	EntityId create_entity();
+	void destroy_entity(EntityId id);
 
 	template <typename C>
 	void add_component(EntityId ent, const C& comp);
@@ -60,6 +63,7 @@ public:
 
 	bool entity_exists(EntityId ent);
 
+	unsigned int count() { return m_entities.count(); }
 private:
 	template<typename C>
 	void check_single_component(const ComponentIndexLUTRow & componentIndexLutrow, bool & match); // internally used by get_entites2

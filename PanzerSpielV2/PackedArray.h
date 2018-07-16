@@ -25,6 +25,9 @@ struct DataEntry
 template <class T>
 class PackedArray : public IPackedArray
 {
+#ifdef _DEBUG
+	friend class Test;
+#endif
 	using iterator = std::_Vector_iterator<std::_Vector_val<std::_Simple_types<DataEntry<T>>>>;
 
 	struct IndexEntry

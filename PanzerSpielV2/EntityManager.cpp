@@ -28,7 +28,7 @@ EntityManager::~EntityManager()
 	}
 }
 
-EntityId EntityManager::CreateEntity()
+EntityId EntityManager::create_entity()
 {
 	// Dont create more than allowed
 	if (m_entity_count == m_max_entity_count)
@@ -49,7 +49,7 @@ EntityId EntityManager::CreateEntity()
 	return newID;
 }
 
-void EntityManager::DestroyEntity(EntityId ent)
+void EntityManager::destroy_entity(EntityId ent)
 {
 	ComponentIndexLUTRow componentLUT;
 	ZeroMemory(&componentLUT, sizeof(componentLUT));

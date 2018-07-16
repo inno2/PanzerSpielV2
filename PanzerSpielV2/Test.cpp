@@ -141,6 +141,35 @@ Test::result Test::Test_PackedArray() {
 	return result::Pass;
 }
 Test::result Test::Test_EntityManager() {
+	const unsigned int entity_amount = 100;
+	EntityManager em = EntityManager(entity_amount);
+
+	EntityId entities[entity_amount];
+	for (int i = 0; i < entity_amount; i++) {
+		entities[i] = em.create_entity();
+	}
+
+	if (em.count() != entity_amount) {
+		return result::Fail;
+	}
+
+	//delete every second entry
+	for (int i = 0; i < entity_amount; i += 2) {
+		em.destroy_entity(entities[i]);
+	}
+
+	//check count and entries
+	//check Count
+	if (em.count() != (entity_amount / 2)) {
+		return Fail;
+	}
+	
+	if (Packedarray_consistency_check(em.m_entities) == result::Fail) {
+		return result::Fail;
+	}
+	
+
+
 	return result::Pass;
 }
 

@@ -1,46 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-<<<<<<< HEAD
     <FxCompile Include="PSColor.hlsl" />
     <FxCompile Include="PSTexture.hlsl" />
     <FxCompile Include="VSColor.hlsl" />
     <FxCompile Include="VSTexture.hlsl" />
-=======
-    <Filter Include="Core">
-      <UniqueIdentifier>{6dea68af-0913-4ce0-86b6-d1c78a857a65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Graphics">
-      <UniqueIdentifier>{ce6bc1fe-8971-4e25-9025-4ffe6f5cc578}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility">
-      <UniqueIdentifier>{4dca4dfc-7b22-45e9-a373-96de32060b09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\Input">
-      <UniqueIdentifier>{0ddd0c63-4d21-4df2-a942-87cdd62f7e9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS">
-      <UniqueIdentifier>{65471faa-2cbd-4271-b523-75bbe10f0f9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS\Components">
-      <UniqueIdentifier>{9da4503c-4ccf-4726-a6d6-c265f95efde6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\ECS\Systems">
-      <UniqueIdentifier>{70bd651e-7862-49a0-b1bc-a071833261dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\Logger">
-      <UniqueIdentifier>{355886d9-da25-447f-84fb-8e2f4db51187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Utility\tinyobjloader">
-      <UniqueIdentifier>{4691fa37-652e-4874-a01a-6762a2e0e172}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Graphics\Shader">
-      <UniqueIdentifier>{4ead300b-96f9-474c-a386-8a138b39b3c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{fe66e76d-8a19-4fd0-8a0b-617237376403}</UniqueIdentifier>
-    </Filter>
->>>>>>> 4b8b37520cb7ed90d182f202359c8085228a7078
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
