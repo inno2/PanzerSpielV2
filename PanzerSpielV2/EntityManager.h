@@ -51,6 +51,9 @@ public:
 	bool get_component(EntityId ent, C& comp_out);
 
 	template<typename C>
+	C& get_component(EntityId ent);
+
+	template<typename C>
 	std::vector<DataEntry<C>>& get_all_components();
 		
 	std::vector<EntityId> get_entities(const std::vector<ComponentType>& filter);
@@ -84,7 +87,8 @@ private:
 template<typename C>
 inline void EntityManager::add_component(EntityId ent, const C& comp)
 {
-	static ComponentType type = get_type<C>();			
+	static ComponentType type = Component<C>::type;			
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>(m_componentArrayLUT.at(type));
 
 	if (!m_entities.exists(ent))
 		return;
@@ -95,10 +99,7 @@ inline void EntityManager::add_component(EntityId ent, const C& comp)
 	ComponentIndexPair& componentIndexPair = componentLUT.at(type);
 	if (componentIndexPair.assigned)
 		return;
-
-	// Get correct component Array from the LUT
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
-
+	
 	// Add component to array
 	ArrayIndex newIndex;
 	if (!compArray->add(comp, newIndex))
@@ -116,7 +117,8 @@ inline void EntityManager::add_component(EntityId ent, const C& comp)
 template<typename C>
 inline void EntityManager::remove_component(EntityId ent)
 {
-	static ComponentType type = get_type<C>();
+	static ComponentType type = Component<C>::type;
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 
 	if (!entity_exists(ent))
 		return;
@@ -127,10 +129,7 @@ inline void EntityManager::remove_component(EntityId ent)
 	ComponentIndexPair& componentIndexPair = componentLUT.at(type);	
 	if (!componentIndexPair.assigned)
 		return;
-
-	// Get correct component Array from the LUT
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
-
+	
 	// Remove component
 	compArray->remove(componentIndexPair.index);
 
@@ -144,10 +143,11 @@ inline void EntityManager::remove_component(EntityId ent)
 template<typename C>
 inline bool EntityManager::get_component(EntityId ent, C& comp_out)
 {
-	static ComponentType type = get_type<C>();		
+	static ComponentType type = Component<C>::type;
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>(m_componentArrayLUT.at(type));
 
 	if (!entity_exists(ent))
-		return;
+		return false;
 
 	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
 	
@@ -157,26 +157,43 @@ inline bool EntityManager::get_component(EntityId ent, C& comp_out)
 	if (!componentIndexPair.assigned)
 		return false;
 
-	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
-	C& comp_out = compArray->get(componentIndexPair.index);
+	
+	comp_out = compArray->get(componentIndexPair.index);
+}
+
+template<typename C>
+inline C & EntityManager::get_component(EntityId ent)
+{
+	static ComponentType type = Component<C>::type;
+	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>(m_componentArrayLUT.at(type));
+
+	if (!entity_exists(ent))
+		return C();
+
+	ComponentIndexLUTRow& componentLUT = m_entities.get(ent);
+
+	ComponentIndexPair componentIndexPair = componentLUT.at(type);
+
+	// Check if component exists
+	if (!componentIndexPair.assigned)
+		return C();
+	
+	return compArray->get(componentIndexPair.index);
 }
 
 template<typename C>
 inline std::vector<DataEntry<C>>& EntityManager::get_all_components()
 {
-	static ComponentType type = get_type<C>();
-	
-	// Get correct component Array from the LUT
+	static ComponentType type = Component<C>::type;
 	static PackedArray<C>* compArray = reinterpret_cast<PackedArray<C>*>m_componentArrayLUT.at(type);
 
 	return compArray->get_all();
-
 }
 
 template<typename C>
 inline void  EntityManager::check_single_component(const ComponentIndexLUTRow& componentIndexLutrow, bool& match)
 {
-	static ComponentType type = get_type<C>();
+	static ComponentType type = Component<C>::type;
 	if (!componentIndexLutrow[type].assigned)
 		match = false;
 }
@@ -193,10 +210,10 @@ inline std::vector<EntityId>& EntityManager::get_entities2()
 	{
 		bool match = true;
 		//https://stackoverflow.com/questions/21180346/variadic-template-unpacking-arguments-to-typename
-		int dummy[]{ 0, (check_single_component<ComponentTypes>(ent_data, match), 0)... };
+		int dummy[]{ 0, (check_single_component<ComponentTypes>(ent_data.data, match), 0)... };
 
 		if (match)
-			entities.push_back(id);
+			entities.push_back(ent_data.index);
 	}
 	m_entites_changed = false;
 	return entities;

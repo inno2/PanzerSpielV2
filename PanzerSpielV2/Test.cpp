@@ -1,6 +1,8 @@
 #include "Test.h"
 #include "PackedArray.h"
 #include "EntityManager.h"
+#include "Movement_Component.h"
+#include "Transformation_Component.h"
 
 
 
@@ -134,6 +136,17 @@ Test::result Test::Test_PackedArray() {
 			return Fail;
 		}
 	}
+	
+	//create some more entries	
+	for (int i = 0; i < (amount / 2); i++) {
+		if (UUT.add(i, index) == false) {
+			return Fail;
+		}
+	}
+
+	if (Packedarray_consistency_check(UUT) == result::Fail) {
+		return result::Fail;
+	}
 
 	//std::vector<int> *list = (std::vector<int>*)UUT.GetAll();
 	//Reset
@@ -142,11 +155,21 @@ Test::result Test::Test_PackedArray() {
 }
 Test::result Test::Test_EntityManager() {
 	const unsigned int entity_amount = 100;
-	EntityManager em = EntityManager(entity_amount);
-
+	EntityManager em = EntityManager(entity_amount);		
 	EntityId entities[entity_amount];
+
+	// create entities and add 2 components
 	for (int i = 0; i < entity_amount; i++) {
 		entities[i] = em.create_entity();
+
+		Transformation_Component tcomp;
+		tcomp.somevalue = i;
+
+		Movement_Component mcomp;
+		mcomp.somevalue = -i;
+
+		em.add_component<Transformation_Component>(entities[i], tcomp);
+		em.add_component<Movement_Component>(entities[i], mcomp);
 	}
 
 	if (em.count() != entity_amount) {
@@ -156,17 +179,39 @@ Test::result Test::Test_EntityManager() {
 	//delete every second entry
 	for (int i = 0; i < entity_amount / 2; i ++) {
 		em.destroy_entity(entities[i]);
+		entities[i] = 0;
 	}
 
-	//check count and entries
-	//check Count
+	//check count
 	if (em.count() != (entity_amount / 2)) {
 		return Fail;
 	}
-	
-	if (Packedarray_consistency_check(em.m_entities) == result::Fail) {
-		return result::Fail;
+
+	// check if each entity still has its components
+	int count = entity_amount / 2;
+	for each(EntityId ent in em.get_entities2<Transformation_Component, Movement_Component>())
+	{
+		Transformation_Component tcomp;
+		if (!em.get_component<Transformation_Component>(ent, tcomp))
+			return result::Fail;
+
+		if (tcomp.somevalue != (int)ent)
+			return result::Fail;
+
+		Movement_Component mcomp;
+		if (!em.get_component<Movement_Component>(ent, mcomp))
+			return result::Fail;
+		
+		if (mcomp.somevalue != -(int)ent)
+			return result::Fail;
+
+		count++;
 	}
+
+	// did we get ALL components back (we should have)
+	if (count != entity_amount) {
+		return result::Fail;
+	}	
 
 	return result::Pass;
 }

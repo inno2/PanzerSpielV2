@@ -16,5 +16,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	*/
 
 	Test tester;
-	Test::result res = tester.Test_EntityManager();
+	Test::result res = tester.testAll();
 }

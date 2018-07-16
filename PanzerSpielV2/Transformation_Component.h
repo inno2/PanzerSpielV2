@@ -7,6 +7,7 @@ class Transformation_Component : public Component<Transformation_Component>
 public:
 	Eigen::Vector3f m_position;
 	Eigen::Vector3f m_orientation;
+	int somevalue;
 };
 
 ComponentType Transformation_Component::type = ComponentType::TransformationComponent;

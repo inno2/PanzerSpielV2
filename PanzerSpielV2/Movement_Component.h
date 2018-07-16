@@ -6,7 +6,8 @@ class Movement_Component : public Component<Movement_Component>
 {
 public:
 	Eigen::Vector3f m_velocity;
-	Eigen::Vector3f m_rotation;
+	Eigen::Vector3f m_rotation;	
+	int somevalue;
 };
 
 ComponentType Movement_Component::type = ComponentType::MovementComponent;
