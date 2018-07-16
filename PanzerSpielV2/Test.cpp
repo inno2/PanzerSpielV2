@@ -154,7 +154,7 @@ Test::result Test::Test_EntityManager() {
 	}
 
 	//delete every second entry
-	for (int i = 0; i < entity_amount; i += 2) {
+	for (int i = 0; i < entity_amount / 2; i ++) {
 		em.destroy_entity(entities[i]);
 	}
 
@@ -167,8 +167,6 @@ Test::result Test::Test_EntityManager() {
 	if (Packedarray_consistency_check(em.m_entities) == result::Fail) {
 		return result::Fail;
 	}
-	
-
 
 	return result::Pass;
 }

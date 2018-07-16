@@ -65,7 +65,7 @@ public:
 private:
 	unsigned int m_activeEntryCount;
 	unsigned int m_firstFreeEntry;
-	unsigned int m_MaxEntries;
+	unsigned int m_maxEntries;
 	size_t m_Size;
 
 	std::vector<IndexEntry> m_indices;
@@ -81,7 +81,7 @@ inline PackedArray<T>::PackedArray(unsigned int max_entries)
 template<class T>
 inline PackedArray<T>::PackedArray()
 {
-	m_MaxEntries = 0;
+	m_maxEntries = 0;
 }
 
 template<class T>
@@ -94,9 +94,9 @@ inline PackedArray<T>::~PackedArray()
 template<class T>
 inline void PackedArray<T>::init(unsigned int max_entries)
 {
-	m_MaxEntries = max_entries;
-	m_indices.reserve(max_entries);
-	m_entries.reserve(max_entries);
+	m_maxEntries = max_entries;
+	m_indices.reserve(m_maxEntries + 1); // needs to be one more to work
+	m_entries.reserve(m_maxEntries);
 	reset();
 }
 
@@ -104,16 +104,16 @@ inline void PackedArray<T>::init(unsigned int max_entries)
 template<class T>
 inline void PackedArray<T>::remove(ArrayIndex index)
 {
-	if (m_MaxEntries == 0 || m_activeEntryCount == 0)
+	if (m_maxEntries == 0 || m_activeEntryCount == 0)
 		return;
 
 	if (m_indices[index].m_active == false)
 		return;
 
 	m_indices[index].m_nextFreeIndex = m_firstFreeEntry;
-	m_indices[index].m_active = 0;
+	m_indices[index].m_active = false;
 	m_firstFreeEntry = index;
-
+	
 	// update compindex of the swapped component
 	m_indices[m_entries[m_activeEntryCount - 1].index].m_compindex = m_indices[index].m_compindex;
 
@@ -129,7 +129,7 @@ inline void PackedArray<T>::remove(ArrayIndex index)
 template<class T>
 inline bool PackedArray<T>::exists(ArrayIndex index)
 {
-	if (index >= m_MaxEntries)
+	if (index >= m_maxEntries)
 		return false;
 
 	return m_indices[index].m_active;
@@ -138,10 +138,7 @@ inline bool PackedArray<T>::exists(ArrayIndex index)
 template<class T>
 inline bool PackedArray<T>::get(ArrayIndex index, T& comp_out)
 {
-	if (m_MaxEntries == 0)
-		return false;
-
-	if (m_indices[index].m_active != true)
+	if (!exists(index))
 		return false;
 
 	comp_out = m_entries.at(m_indices[index].m_compindex).data;
@@ -172,28 +169,34 @@ inline void PackedArray<T>::reset()
 {
 	m_activeEntryCount = 0;
 	m_firstFreeEntry = 0;
-	//m_lastEntry = 0;
 	m_Size = 0;
 
 	m_indices.clear();
 	m_entries.clear();
 
-	for (unsigned int i = 0; i < m_MaxEntries - 1; ++i)
+	for (unsigned int i = 0; i < m_maxEntries; ++i)
 	{
 		m_indices.push_back(IndexEntry(i + 1));
 	}
 	m_indices.push_back(IndexEntry());
-	m_indices[m_MaxEntries - 1].m_endOfList = true;
+	m_indices[m_maxEntries].m_endOfList = true;
 }
 
 template<class T>
 inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
 {
-	if (m_MaxEntries == 0 || m_activeEntryCount == m_MaxEntries)
+	if (m_activeEntryCount >= m_maxEntries)
 		return false;
-
+	
 	// get next free index
 	newIndex = m_firstFreeEntry;
+	if(newIndex >= m_maxEntries)
+		return false;		
+	
+	if(m_indices[newIndex].m_active || m_indices[newIndex].m_endOfList)
+		return false;
+	
+	// update freeIndices
 	m_firstFreeEntry = m_indices[newIndex].m_nextFreeIndex;
 	m_indices[newIndex].m_nextFreeIndex = 0;
 
@@ -202,7 +205,6 @@ inline bool PackedArray<T>::add(const T& newEntry, ArrayIndex& newIndex)
 
 	// set index of corresponding entry
 	m_indices[newIndex].m_compindex = m_activeEntryCount;
-
 	m_entries.push_back(DataEntry<T>(newIndex, newEntry));
 
 	++m_activeEntryCount;
